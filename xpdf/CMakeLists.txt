@@ -228,7 +228,7 @@ install(FILES ${PROJECT_SOURCE_DIR}/doc/pdfimages.1 DESTINATION man/man1)
 install(FILES ${PROJECT_SOURCE_DIR}/doc/xpdfrc.5 DESTINATION man/man5)
 
 # build a static library with the stuff... 
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/)
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/xpdf/lib)
 add_library(xpdf STATIC 
   AcroForm.cc
   Annot.cc
