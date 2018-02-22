@@ -226,3 +226,78 @@ install(FILES ${PROJECT_SOURCE_DIR}/doc/pdfimages.1 DESTINATION man/man1)
 #--- xpdfrc man page
 
 install(FILES ${PROJECT_SOURCE_DIR}/doc/xpdfrc.5 DESTINATION man/man5)
+
+# build a static library with the stuff... 
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib/)
+add_library(xpdf STATIC 
+  AcroForm.cc
+  Annot.cc
+  Array.cc
+  BuiltinFont.cc
+  BuiltinFontTables.cc
+  Catalog.cc
+  CharCodeToUnicode.cc
+  CMap.cc
+  Decrypt.cc
+  Dict.cc
+  DisplayState.cc
+  Error.cc
+  FontEncodingTables.cc
+  Form.cc
+  Function.cc
+  Gfx.cc
+  GfxFont.cc
+  GfxState.cc
+  GlobalParams.cc
+  HTMLGen.cc
+  ImageOutputDev.cc
+  JArithmeticDecoder.cc
+  JBIG2Stream.cc
+  JPXStream.cc
+  Lexer.cc
+  Link.cc
+  NameToCharCode.cc
+  Object.cc
+  OptionalContent.cc
+  Outline.cc
+  OutputDev.cc
+  Page.cc
+  Parser.cc
+  PDFCore.cc
+  pdfdetach.cc
+  PDFDoc.cc
+  PDFDocEncoding.cc
+  pdffonts.cc
+  pdfimages.cc
+  pdfinfo.cc
+  pdftohtml.cc
+  pdftopng.cc
+  pdftoppm.cc
+  pdftops.cc
+  pdftotext.cc
+  PreScanOutputDev.cc
+  PSOutputDev.cc
+  PSTokenizer.cc
+  SecurityHandler.cc
+  SplashOutputDev.cc
+  Stream.cc
+  TextOutputDev.cc
+  TextString.cc
+  TileCache.cc
+  TileCompositor.cc
+  TileMap.cc
+  UnicodeMap.cc
+  UnicodeTypeTable.cc
+  UTF8.cc
+  XFAForm.cc
+  XRef.cc
+  Zoox.cc
+)
+
+install(TARGETS xpdf DESTINATION lib)
+
+
+INSTALL (
+    DIRECTORY ${PROJECT_SOURCE_DIR}/include/
+    DESTINATION ${PROJECT_SOURCE_DIR}/include/
+    FILES_MATCHING PATTERN "*.h*")
