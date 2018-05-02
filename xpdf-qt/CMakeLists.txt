@@ -62,7 +62,7 @@ if ((QT4_FOUND OR Qt5Widgets_FOUND)
     add_definitions(-DNOMINMAX)
   endif ()
 
-  add_executable(xpdf
+  add_executable(xpdf-qt
     $<TARGET_OBJECTS:goo_objs>
     $<TARGET_OBJECTS:fofi_objs>
     $<TARGET_OBJECTS:splash_objs>
@@ -80,12 +80,12 @@ if ((QT4_FOUND OR Qt5Widgets_FOUND)
     ${XPDFWIDGET_MOC}
     ${XPDF_ICONS}
   )
-  target_link_libraries(xpdf ${QT_LIBRARIES} ${EXTRA_QT_LIBRARIES}
+  target_link_libraries(xpdf-qt ${QT_LIBRARIES} ${EXTRA_QT_LIBRARIES}
                         ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
                         ${DTYPE_LIBRARY} ${LCMS_LIBRARY}
                         ${CMAKE_THREAD_LIBS_INIT})
-  set_property(TARGET xpdf PROPERTY WIN32_EXECUTABLE 1)
+  set_property(TARGET xpdf-qt PROPERTY WIN32_EXECUTABLE 1)
 
-  install(TARGETS xpdf RUNTIME DESTINATION bin)
+  install(TARGETS xpdf-qt RUNTIME DESTINATION bin)
   install(FILES ${PROJECT_SOURCE_DIR}/doc/xpdf.1 DESTINATION man/man1)
 endif ()
