@@ -14,6 +14,12 @@ project(xpdf)
 
 include(cmake-config.txt)
 
+if (HAVE_PAPER_H)
+  set(PAPER_LIBRARY ${HAVE_PAPER_H})
+else ()
+  set(PAPER_LIBRARY "")
+endif ()
+
 add_subdirectory(goo)
 add_subdirectory(fofi)
 add_subdirectory(splash)
