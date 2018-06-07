@@ -83,7 +83,7 @@ if ((QT4_FOUND OR Qt5Widgets_FOUND)
   target_link_libraries(xpdf-qt ${QT_LIBRARIES} ${EXTRA_QT_LIBRARIES}
                         ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
                         ${DTYPE_LIBRARY} ${LCMS_LIBRARY}
-                        ${CMAKE_THREAD_LIBS_INIT})
+                        ${CMAKE_THREAD_LIBS_INIT} ${PAPER_LIBRARY})
   set_property(TARGET xpdf-qt PROPERTY WIN32_EXECUTABLE 1)
 
   install(TARGETS xpdf-qt RUNTIME DESTINATION bin)
