@@ -635,7 +635,7 @@ GlobalParams::GlobalParams(const char *cfgFileName) {
   fullScreenMatteColor = new GString("#000000");
   launchCommand = NULL;
   movieCommand = NULL;
-  mapNumericCharNames = gTrue;
+  mapNumericCharNames = gFalse;
   mapUnknownCharNames = gFalse;
   mapExtTrueTypeFontsViaUnicode = gTrue;
   enableXFA = gTrue;
