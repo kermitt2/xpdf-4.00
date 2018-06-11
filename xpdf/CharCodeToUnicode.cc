@@ -647,11 +647,7 @@ void CharCodeToUnicode::setMapping(CharCode c, Unicode *u, int len) {
 int CharCodeToUnicode::mapToUnicode(CharCode c, Unicode *u, int size) {
   int i, j;
 
-  if (!map) {
-    u[0] = (Unicode)c;
-    return 1;
-  }
-  if (c >= mapLen) {
+  if (c >= mapLen || !map) {
     return 0;
   }
   //AA : when no mapping 0 is default, to be catched later for recognition
