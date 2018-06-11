@@ -71,157 +71,157 @@ add_library(xpdf_objs OBJECT
 )
 
 #--- object files needed by XpdfWidget
+#
+#if ((QT4_FOUND OR Qt5Widgets_FOUND)
+#    AND HAVE_SPLASH AND MULTITHREADED AND USE_EXCEPTIONS)
+#
+#  if (HIGHLIGHTED_REGIONS)
+#    set(HIGHLIGHT_SRC "HighlightFile.cc")
+#  else ()
+#    set(HIGHLIGHT_SRC "")
+#  endif ()
+#
+#  add_library(xpdf_widget_objs OBJECT
+#    DisplayState.cc
+#    PDFCore.cc
+#    PreScanOutputDev.cc
+#    PSOutputDev.cc
+#    SplashOutputDev.cc
+#    TextOutputDev.cc
+#    TileCache.cc
+#    TileCompositor.cc
+#    TileMap.cc
+#    ${HIGHLIGHT_SRC}
+#  )
+#endif ()
 
-if ((QT4_FOUND OR Qt5Widgets_FOUND)
-    AND HAVE_SPLASH AND MULTITHREADED AND USE_EXCEPTIONS)
-
-  if (HIGHLIGHTED_REGIONS)
-    set(HIGHLIGHT_SRC "HighlightFile.cc")
-  else ()
-    set(HIGHLIGHT_SRC "")
-  endif ()
-
-  add_library(xpdf_widget_objs OBJECT
-    DisplayState.cc
-    PDFCore.cc
-    PreScanOutputDev.cc
-    PSOutputDev.cc
-    SplashOutputDev.cc
-    TextOutputDev.cc
-    TileCache.cc
-    TileCompositor.cc
-    TileMap.cc
-    ${HIGHLIGHT_SRC}
-  )
-endif ()
-
-#--- pdftops
-
-if (HAVE_SPLASH)
-  add_executable(pdftops
-    $<TARGET_OBJECTS:xpdf_objs>
-    PreScanOutputDev.cc
-    PSOutputDev.cc
-    SplashOutputDev.cc
-    pdftops.cc
-  )
-  target_link_libraries(pdftops goo fofi splash
-                        ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
-                        ${DTYPE_LIBRARY}
-                        ${LCMS_LIBRARY} ${PAPER_LIBRARY})
-else ()
-  add_executable(pdftops
-    $<TARGET_OBJECTS:xpdf_objs>
-    PreScanOutputDev.cc
-    PSOutputDev.cc
-    pdftops.cc
-  )
-  target_link_libraries(pdftops goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
-endif ()
-install(TARGETS pdftops RUNTIME DESTINATION bin)
-install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftops.1 DESTINATION man/man1)
-
-#--- pdftotext
-
-add_executable(pdftotext
-  $<TARGET_OBJECTS:xpdf_objs>
-  TextOutputDev.cc
-  pdftotext.cc
-)
-target_link_libraries(pdftotext goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
-install(TARGETS pdftotext RUNTIME DESTINATION bin)
-install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftotext.1 DESTINATION man/man1)
-
-#--- pdftohtml
-
-if (HAVE_SPLASH AND PNG_FOUND)
-  add_executable(pdftohtml
-    $<TARGET_OBJECTS:xpdf_objs>
-    HTMLGen.cc
-    SplashOutputDev.cc
-    TextOutputDev.cc
-    pdftohtml.cc
-  )
-  target_link_libraries(pdftohtml goo fofi splash
-                        ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
-                        ${DTYPE_LIBRARY}
-                        ${LCMS_LIBRARY} ${PNG_LIBRARIES} ${PAPER_LIBRARY})
-  install(TARGETS pdftohtml RUNTIME DESTINATION bin)
-  install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftohtml.1 DESTINATION man/man1)
-endif ()
-
-#--- pdfinfo
-
-add_executable(pdfinfo
-  $<TARGET_OBJECTS:xpdf_objs>
-  pdfinfo.cc
-)
-target_link_libraries(pdfinfo goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
-install(TARGETS pdfinfo RUNTIME DESTINATION bin)
-install(FILES ${PROJECT_SOURCE_DIR}/doc/pdfinfo.1 DESTINATION man/man1)
-
-#--- pdffonts
-
-add_executable(pdffonts
-  $<TARGET_OBJECTS:xpdf_objs>
-  pdffonts.cc
-)
-target_link_libraries(pdffonts goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
-install(TARGETS pdffonts RUNTIME DESTINATION bin)
-install(FILES ${PROJECT_SOURCE_DIR}/doc/pdffonts.1 DESTINATION man/man1)
-
-#--- pdfdetach
-
-add_executable(pdfdetach
-  $<TARGET_OBJECTS:xpdf_objs>
-  pdfdetach.cc
-)
-target_link_libraries(pdfdetach goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
-install(TARGETS pdfdetach RUNTIME DESTINATION bin)
-install(FILES ${PROJECT_SOURCE_DIR}/doc/pdfdetach.1 DESTINATION man/man1)
-
-#--- pdftoppm
-
-if (HAVE_SPLASH)
-  add_executable(pdftoppm
-    $<TARGET_OBJECTS:xpdf_objs>
-    SplashOutputDev.cc
-    pdftoppm.cc
-  )
-  target_link_libraries(pdftoppm goo fofi splash
-                        ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
-                        ${DTYPE_LIBRARY}
-                        ${LCMS_LIBRARY} ${PAPER_LIBRARY})
-  install(TARGETS pdftoppm RUNTIME DESTINATION bin)
-  install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftoppm.1 DESTINATION man/man1)
-endif ()
-
-#--- pdftopng
-
-if (HAVE_SPLASH AND PNG_FOUND)
-  add_executable(pdftopng
-    $<TARGET_OBJECTS:xpdf_objs>
-    SplashOutputDev.cc
-    pdftopng.cc
-  )
-  target_link_libraries(pdftopng goo fofi splash
-                        ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
-                        ${DTYPE_LIBRARY}
-                        ${LCMS_LIBRARY} ${PNG_LIBRARIES} ${PAPER_LIBRARY})
-  install(TARGETS pdftopng RUNTIME DESTINATION bin)
-  install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftopng.1 DESTINATION man/man1)
-endif ()
-
-#--- pdfimages
-
-add_executable(pdfimages
-  $<TARGET_OBJECTS:xpdf_objs>
-  ImageOutputDev.cc
-  pdfimages.cc
-)
-target_link_libraries(pdfimages goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
-install(TARGETS pdfimages RUNTIME DESTINATION bin)
-install(FILES ${PROJECT_SOURCE_DIR}/doc/pdfimages.1 DESTINATION man/man1)
+##--- pdftops
+#
+#if (HAVE_SPLASH)
+#  add_executable(pdftops
+#    $<TARGET_OBJECTS:xpdf_objs>
+#    PreScanOutputDev.cc
+#    PSOutputDev.cc
+#    SplashOutputDev.cc
+#    pdftops.cc
+#  )
+#  target_link_libraries(pdftops goo fofi splash
+#                        ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
+#                        ${DTYPE_LIBRARY}
+#                        ${LCMS_LIBRARY} ${PAPER_LIBRARY})
+#else ()
+#  add_executable(pdftops
+#    $<TARGET_OBJECTS:xpdf_objs>
+#    PreScanOutputDev.cc
+#    PSOutputDev.cc
+#    pdftops.cc
+#  )
+#  target_link_libraries(pdftops goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
+#endif ()
+#install(TARGETS pdftops RUNTIME DESTINATION bin)
+#install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftops.1 DESTINATION man/man1)
+#
+##--- pdftotext
+#
+#add_executable(pdftotext
+#  $<TARGET_OBJECTS:xpdf_objs>
+#  TextOutputDev.cc
+#  pdftotext.cc
+#)
+#target_link_libraries(pdftotext goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
+#install(TARGETS pdftotext RUNTIME DESTINATION bin)
+#install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftotext.1 DESTINATION man/man1)
+#
+##--- pdftohtml
+#
+#if (HAVE_SPLASH AND PNG_FOUND)
+#  add_executable(pdftohtml
+#    $<TARGET_OBJECTS:xpdf_objs>
+#    HTMLGen.cc
+#    SplashOutputDev.cc
+#    TextOutputDev.cc
+#    pdftohtml.cc
+#  )
+#  target_link_libraries(pdftohtml goo fofi splash
+#                        ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
+#                        ${DTYPE_LIBRARY}
+#                        ${LCMS_LIBRARY} ${PNG_LIBRARIES} ${PAPER_LIBRARY})
+#  install(TARGETS pdftohtml RUNTIME DESTINATION bin)
+#  install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftohtml.1 DESTINATION man/man1)
+#endif ()
+#
+##--- pdfinfo
+#
+#add_executable(pdfinfo
+#  $<TARGET_OBJECTS:xpdf_objs>
+#  pdfinfo.cc
+#)
+#target_link_libraries(pdfinfo goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
+#install(TARGETS pdfinfo RUNTIME DESTINATION bin)
+#install(FILES ${PROJECT_SOURCE_DIR}/doc/pdfinfo.1 DESTINATION man/man1)
+#
+##--- pdffonts
+#
+#add_executable(pdffonts
+#  $<TARGET_OBJECTS:xpdf_objs>
+#  pdffonts.cc
+#)
+#target_link_libraries(pdffonts goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
+#install(TARGETS pdffonts RUNTIME DESTINATION bin)
+#install(FILES ${PROJECT_SOURCE_DIR}/doc/pdffonts.1 DESTINATION man/man1)
+#
+##--- pdfdetach
+#
+#add_executable(pdfdetach
+#  $<TARGET_OBJECTS:xpdf_objs>
+#  pdfdetach.cc
+#)
+#target_link_libraries(pdfdetach goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
+#install(TARGETS pdfdetach RUNTIME DESTINATION bin)
+#install(FILES ${PROJECT_SOURCE_DIR}/doc/pdfdetach.1 DESTINATION man/man1)
+#
+##--- pdftoppm
+#
+#if (HAVE_SPLASH)
+#  add_executable(pdftoppm
+#    $<TARGET_OBJECTS:xpdf_objs>
+#    SplashOutputDev.cc
+#    pdftoppm.cc
+#  )
+#  target_link_libraries(pdftoppm goo fofi splash
+#                        ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
+#                        ${DTYPE_LIBRARY}
+#                        ${LCMS_LIBRARY} ${PAPER_LIBRARY})
+#  install(TARGETS pdftoppm RUNTIME DESTINATION bin)
+#  install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftoppm.1 DESTINATION man/man1)
+#endif ()
+#
+##--- pdftopng
+#
+#if (HAVE_SPLASH AND PNG_FOUND)
+#  add_executable(pdftopng
+#    $<TARGET_OBJECTS:xpdf_objs>
+#    SplashOutputDev.cc
+#    pdftopng.cc
+#  )
+#  target_link_libraries(pdftopng goo fofi splash
+#                        ${FREETYPE_LIBRARY} ${FREETYPE_OTHER_LIBS}
+#                        ${DTYPE_LIBRARY}
+#                        ${LCMS_LIBRARY} ${PNG_LIBRARIES} ${PAPER_LIBRARY})
+#  install(TARGETS pdftopng RUNTIME DESTINATION bin)
+#  install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftopng.1 DESTINATION man/man1)
+#endif ()
+#
+##--- pdfimages
+#
+#add_executable(pdfimages
+#  $<TARGET_OBJECTS:xpdf_objs>
+#  ImageOutputDev.cc
+#  pdfimages.cc
+#)
+#target_link_libraries(pdfimages goo fofi ${LCMS_LIBRARY} ${PAPER_LIBRARY})
+#install(TARGETS pdfimages RUNTIME DESTINATION bin)
+#install(FILES ${PROJECT_SOURCE_DIR}/doc/pdfimages.1 DESTINATION man/man1)
 
 #--- xpdfrc man page
 
