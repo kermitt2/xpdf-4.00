@@ -122,7 +122,7 @@ add_library(xpdf_objs OBJECT
 #install(FILES ${PROJECT_SOURCE_DIR}/doc/pdftops.1 DESTINATION man/man1)
 #
 ##--- pdftotext
-#
+
 #add_executable(pdftotext
 #  $<TARGET_OBJECTS:xpdf_objs>
 #  TextOutputDev.cc
@@ -250,7 +250,7 @@ add_library(xpdf STATIC
   GfxState.cc
   GlobalParams.cc
   HTMLGen.cc
-  ImageOutputDev.cc
+  #ImageOutputDev.cc
   JArithmeticDecoder.cc
   JBIG2Stream.cc
   JPXStream.cc
@@ -264,28 +264,28 @@ add_library(xpdf STATIC
   Page.cc
   Parser.cc
   PDFCore.cc
-  pdfdetach.cc
+  #pdfdetach.cc
   PDFDoc.cc
   PDFDocEncoding.cc
-  pdffonts.cc
-  pdfimages.cc
-  pdfinfo.cc
-  pdftohtml.cc
-  pdftopng.cc
-  pdftoppm.cc
-  pdftops.cc
-  pdftotext.cc
-  PreScanOutputDev.cc
-  PSOutputDev.cc
+  #pdffonts.cc
+  #pdfimages.cc
+  #pdfinfo.cc
+  #pdftohtml.cc
+  #pdftopng.cc
+  #pdftoppm.cc
+  #pdftops.cc
+  #pdftotext.cc
+  #PreScanOutputDev.cc
+  #PSOutputDev.cc
   PSTokenizer.cc
   SecurityHandler.cc
-  SplashOutputDev.cc
+  #SplashOutputDev.cc
   Stream.cc
-  TextOutputDev.cc
+  #TextOutputDev.cc
   TextString.cc
-  TileCache.cc
-  TileCompositor.cc
-  TileMap.cc
+  #TileCache.cc
+  #TileCompositor.cc
+  #TileMap.cc
   UnicodeMap.cc
   UnicodeTypeTable.cc
   UTF8.cc
