@@ -22,7 +22,7 @@ endif ()
 
 add_subdirectory(goo)
 add_subdirectory(fofi)
-#add_subdirectory(splash)
+add_subdirectory(splash)
 add_subdirectory(xpdf)
 #add_subdirectory(xpdf-qt)
 
