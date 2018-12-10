@@ -232,6 +232,10 @@ CharCodeToUnicode *CharCodeToUnicode::make8BitToUnicode(Unicode *toUnicode) {
   return new CharCodeToUnicode(NULL, toUnicode, 256, gTrue, NULL, 0, 0);
 }
 
+CharCodeToUnicode *CharCodeToUnicode::makeUnicodeToUnicode(GString *fontname, Unicode *toUnicode, int lenA) {
+    return new CharCodeToUnicode(fontname->copy(), toUnicode, lenA, gTrue, NULL, 0, 0);
+}
+
 CharCodeToUnicode *CharCodeToUnicode::parseCMap(GString *buf, int nBits) {
   CharCodeToUnicode *ctu;
   GStringIndex idx;

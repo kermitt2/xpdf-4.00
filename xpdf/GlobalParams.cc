@@ -61,7 +61,7 @@
 #include "NameToUnicodeTable.h"
 #include "UnicodeMapTables.h"
 #include "UTF8.h"
-
+#include "UnicodeToUnicodeFontRules.h"
 //------------------------------------------------------------------------
 
 #define cidToUnicodeCacheSize     4
@@ -2999,6 +2999,7 @@ CharCodeToUnicode *GlobalParams::getUnicodeToUnicode(GString *fontName) {
 
   lockGlobalParams;
   fileName = NULL;
+
   unicodeToUnicodes->startIter(&iter);
   while (unicodeToUnicodes->getNext(&iter, &fontPattern, (void **)&fileName)) {
     if (strstr(fontName->getCString(), fontPattern->getCString())) {
@@ -3016,6 +3017,16 @@ CharCodeToUnicode *GlobalParams::getUnicodeToUnicode(GString *fontName) {
   } else {
     ctu = NULL;
   }
+
+  for (FontRules fontrule : fontRules) {
+    GString * fontname  = new GString(fontrule.name);
+    if(strstr(fontName->getCString(), fontname->getCString())){
+      //memset(mapA + oldSize, 0, (size - oldSize) * sizeof(Unicode));
+      ctu = CharCodeToUnicode::makeUnicodeToUnicode(fontName->copy(), fontrule.map, fontrule.length);
+      unicodeToUnicodeCache->add(ctu);
+    }
+  }
+
   unlockGlobalParams;
   return ctu;
 }

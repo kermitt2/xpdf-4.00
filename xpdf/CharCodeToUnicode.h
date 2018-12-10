@@ -49,6 +49,8 @@ public:
   // reference count to 1.
   static CharCodeToUnicode *make8BitToUnicode(Unicode *toUnicode);
 
+    static CharCodeToUnicode *makeUnicodeToUnicode(GString *fontname, Unicode *toUnicode, int lenA);
+
   // Parse a ToUnicode CMap for an 8- or 16-bit font.
   static CharCodeToUnicode *parseCMap(GString *buf, int nBits);
 
