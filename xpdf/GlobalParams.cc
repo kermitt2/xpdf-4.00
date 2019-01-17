@@ -3022,7 +3022,12 @@ CharCodeToUnicode *GlobalParams::getUnicodeToUnicode(GString *fontName) {
     GString * fontname  = new GString(fontrule.name);
     if(strstr(fontName->getCString(), fontname->getCString())){
       //memset(mapA + oldSize, 0, (size - oldSize) * sizeof(Unicode));
-      ctu = CharCodeToUnicode::makeUnicodeToUnicode(fontName->copy(), fontrule.map, fontrule.length);
+      Unicode map[fontrule.maxCharCode + 1];
+      int n = (sizeof(advtt3f84ef53) / sizeof(UnicodeMapping));
+      for(int i = 0; i < n; i++){
+        map[fontrule.map[i].charcode]=fontrule.map[i].unicode;
+      }
+      ctu = CharCodeToUnicode::makeUnicodeToUnicode(fontName->copy(), map, fontrule.maxCharCode + 1);
       unicodeToUnicodeCache->add(ctu);
     }
   }
