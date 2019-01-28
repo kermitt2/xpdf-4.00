@@ -249,7 +249,7 @@ add_library(xpdf STATIC
   GfxFont.cc
   GfxState.cc
   GlobalParams.cc
-  HTMLGen.cc
+  #HTMLGen.cc
   #ImageOutputDev.cc
   JArithmeticDecoder.cc
   JBIG2Stream.cc
