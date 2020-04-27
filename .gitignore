@@ -13,3 +13,8 @@ build
 *.a
 *.dll
 *.so
+*.cmake
+*/CMakeFiles/*
+*/Makefile
+Makefile
+CMakeFiles/*

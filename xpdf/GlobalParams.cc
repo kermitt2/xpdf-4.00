@@ -61,7 +61,7 @@
 #include "NameToUnicodeTable.h"
 #include "UnicodeMapTables.h"
 #include "UTF8.h"
-
+#include "UnicodeToUnicodeFontRules.h"
 //------------------------------------------------------------------------
 
 #define cidToUnicodeCacheSize     4
@@ -635,7 +635,7 @@ GlobalParams::GlobalParams(const char *cfgFileName) {
   fullScreenMatteColor = new GString("#000000");
   launchCommand = NULL;
   movieCommand = NULL;
-  mapNumericCharNames = gTrue;
+  mapNumericCharNames = gFalse;
   mapUnknownCharNames = gFalse;
   mapExtTrueTypeFontsViaUnicode = gTrue;
   enableXFA = gTrue;
@@ -2999,6 +2999,7 @@ CharCodeToUnicode *GlobalParams::getUnicodeToUnicode(GString *fontName) {
 
   lockGlobalParams;
   fileName = NULL;
+
   unicodeToUnicodes->startIter(&iter);
   while (unicodeToUnicodes->getNext(&iter, &fontPattern, (void **)&fileName)) {
     if (strstr(fontName->getCString(), fontPattern->getCString())) {
@@ -3016,6 +3017,21 @@ CharCodeToUnicode *GlobalParams::getUnicodeToUnicode(GString *fontName) {
   } else {
     ctu = NULL;
   }
+
+  for (FontRules fontrule : fontRules) {
+    GString * fontname  = new GString(fontrule.name);
+    if(strstr(fontName->getCString(), fontname->getCString())){
+      //memset(mapA + oldSize, 0, (size - oldSize) * sizeof(Unicode));
+      Unicode map[fontrule.maxCharCode + 1];
+      int n = (sizeof(advtt3f84ef53) / sizeof(UnicodeMapping));
+      for(int i = 0; i < n; i++){
+        map[fontrule.map[i].charcode]=fontrule.map[i].unicode;
+      }
+      ctu = CharCodeToUnicode::makeUnicodeToUnicode(fontName->copy(), map, fontrule.maxCharCode + 1);
+      unicodeToUnicodeCache->add(ctu);
+    }
+  }
+
   unlockGlobalParams;
   return ctu;
 }
