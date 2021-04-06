@@ -218,6 +218,7 @@ public:
   // Initialize the global parameters by attempting to read a config
   // file.
   GlobalParams(const char *cfgFileName);
+  GlobalParams(const char *cfgFileName, const char *cfgExecutablePath);
 
   ~GlobalParams();
 
@@ -315,6 +316,7 @@ public:
   PopupMenuCmd *getPopupMenuCmd(int idx);
   GBool getPrintCommands();
   GBool getErrQuiet();
+  GString *getExecutablePath() { return executablePath; };
 
   CharCodeToUnicode *getCIDToUnicode(GString *collection);
   CharCodeToUnicode *getUnicodeToUnicode(GString *fontName);
@@ -367,6 +369,7 @@ public:
   void setEnableXFA(GBool enable);
   void setPrintCommands(GBool printCommandsA);
   void setErrQuiet(GBool errQuietA);
+  void setExecutablePath(GString *path);
 
 #ifdef _WIN32
   void setWin32ErrorInfo(const char *func, DWORD code);
@@ -374,6 +377,7 @@ public:
 #endif
 
 private:
+  void init(const char *cfgFileName, const char *cfgExecutablePath);
 
   void createDefaultKeyBindings();
   void parseFile(GString *fileName, FILE *f);
@@ -544,6 +548,7 @@ private:
   CharCodeToUnicodeCache *unicodeToUnicodeCache;
   UnicodeMapCache *unicodeMapCache;
   CMapCache *cMapCache;
+  GString *executablePath;
 
 #if MULTITHREADED
   GMutex mutex;
